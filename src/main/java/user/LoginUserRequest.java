@@ -1,8 +1,12 @@
+package user;
+
+import models.UserModel;
+
 public class LoginUserRequest {
-   private boolean success;
-    private    String accessToken;
-    private   String refreshToken;
-    private User user;
+    private boolean success;
+    private String accessToken;
+    private String refreshToken;
+    private UserModel user;
     private String email;
     private String password;
 
@@ -30,14 +34,17 @@ public class LoginUserRequest {
         this.refreshToken = refreshToken;
     }
 
-    public User getUser() {
+    public UserModel getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserModel user) {
         this.user = user;
     }
-    public LoginUserRequest() {}
+
+    public LoginUserRequest() {
+    }
+
     public LoginUserRequest(String email, String password) {
         this.email = email;
         this.password = password;

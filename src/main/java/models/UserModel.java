@@ -1,14 +1,21 @@
-public class User {
+package models;
+
+public class UserModel {
     private String name;
     private String email;
+
     public String getEmail() {
         return email;
     }
-public User () {}
-    public User (String name,String email) {
+
+    public UserModel() {
+    }
+
+    public UserModel(String name, String email) {
         this.name = name;
         this.email = email;
     }
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -20,7 +27,6 @@ public User () {}
     public void setName(String name) {
         this.name = name;
     }
-
 
 
 }

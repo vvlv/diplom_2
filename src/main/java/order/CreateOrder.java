@@ -1,4 +1,7 @@
-import java.util.ArrayList;
+package order;
+
+import models.OrderModel;
+
 import java.util.List;
 
 public class CreateOrder {
@@ -6,17 +9,21 @@ public class CreateOrder {
 
     private String name;
     private boolean success;
-    private Order order;
+    private OrderModel order;
 
-    public CreateOrder () {}
-    public CreateOrder (List<String> ingredients) {
+    public CreateOrder() {
+    }
+
+    public CreateOrder(List<String> ingredients) {
         this.ingredients = ingredients;
     }
-    public CreateOrder (String name, Order order, boolean success) {
+
+    public CreateOrder(String name, OrderModel order, boolean success) {
         this.name = name;
         this.order = order;
         this.success = success;
     }
+
     public List<String> getIngredients() {
         return ingredients;
     }
@@ -41,11 +48,11 @@ public class CreateOrder {
         this.success = success;
     }
 
-    public Order getOrder() {
+    public OrderModel getOrder() {
         return order;
     }
 
-    public void setOrder(Order order) {
+    public void setOrder(OrderModel order) {
         this.order = order;
     }
 }

@@ -1,3 +1,6 @@
+package order;
+
+import order.GiveUserOrdersRequest;
 import org.junit.Test;
 
 /*
@@ -5,15 +8,17 @@ import org.junit.Test;
         авторизованный пользователь,
         неавторизованный пользователь.*/
 public class GiveUsersOrderTest {
-GiveUserOrdersRequest giveOrder = new GiveUserOrdersRequest();
-@Test
-    public void giveOrderNoAuth () {
-    giveOrder.giveOrderNoToken();
-    giveOrder.getResponse().then().statusCode(401);
-}
+    GiveUserOrdersRequest giveOrder = new GiveUserOrdersRequest();
+
     @Test
-    public void giveOrderAuth () {
-    giveOrder.createUserAndOrder();
+    public void giveOrderNoAuth() {
+        giveOrder.giveOrderNoToken();
+        giveOrder.getResponse().then().statusCode(401);
+    }
+
+    @Test
+    public void giveOrderAuth() {
+        giveOrder.createUserAndOrder();
         giveOrder.giveOrderToken();
         giveOrder.getResponse().then().statusCode(200);
     }

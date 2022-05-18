@@ -1,5 +1,9 @@
+package order;
+
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
+import order.CreateOrder;
+import user.ChangeUserRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,15 +12,18 @@ import static io.restassured.RestAssured.given;
 
 public class GiveUserOrdersRequest {
     private final String createOrderApi = "https://stellarburgers.nomoreparties.site/api/orders";
-    private final String giveOrderApi ="https://stellarburgers.nomoreparties.site/api/orders";
+    private final String giveOrderApi = "https://stellarburgers.nomoreparties.site/api/orders";
 
     private Response response;
-    public void setResponse (Response response){
+
+    public void setResponse(Response response) {
         this.response = response;
     }
-    public Response getResponse (){
+
+    public Response getResponse() {
         return response;
     }
+
     private String localUseToken;
 
     public String getLocalUseToken() {
@@ -31,11 +38,11 @@ public class GiveUserOrdersRequest {
     public void createUserAndOrder() {
         ChangeUserRequest login = new ChangeUserRequest();
         login.generateUniqueUser();
-setLocalUseToken(login.getToken());
+        setLocalUseToken(login.getToken());
         List<String> ingredients = new ArrayList<>();
         ingredients.add("61c0c5a71d1f82001bdaaa6d");
         ingredients.add("61c0c5a71d1f82001bdaaa71");
-        Response responseUserData =  given()
+        Response responseUserData = given()
                 .header("Content-type", "application/json")
                 .header("authorization", login.getToken())
                 .body(new CreateOrder(ingredients))
@@ -44,17 +51,19 @@ setLocalUseToken(login.getToken());
         setResponse(responseUserData);
 
     }
+
     @Step("Запрос получения заказов без токена")
-    public void giveOrderNoToken () {
-        Response responseUserData =  given()
+    public void giveOrderNoToken() {
+        Response responseUserData = given()
                 .header("Content-type", "application/json")
                 .when()
                 .get(giveOrderApi);
         setResponse(responseUserData);
     }
+
     @Step("Запрос получения заказов авторизированным пользователем")
-    public void giveOrderToken () {
-        Response responseUserData =  given()
+    public void giveOrderToken() {
+        Response responseUserData = given()
                 .header("Content-type", "application/json")
                 .header("authorization", getLocalUseToken())
                 .when()

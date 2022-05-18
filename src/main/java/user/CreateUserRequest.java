@@ -1,19 +1,23 @@
+package user;
+
+import models.UserModel;
+
 public class CreateUserRequest {
 
-private String email;
-private String password;
-private String name;
-private boolean success;
-private String message;
-private User user;
-private String accessToken;
+    private String email;
+    private String password;
+    private String name;
+    private boolean success;
+    private String message;
+    private UserModel user;
+    private String accessToken;
     private String refreshToken;
 
-    public User getUser() {
+    public UserModel getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserModel user) {
         this.user = user;
     }
 
@@ -33,20 +37,24 @@ private String accessToken;
         this.refreshToken = refreshToken;
     }
 
-    public CreateUserRequest () {}
+    public CreateUserRequest() {
+    }
 
-    public CreateUserRequest (String email) {
+    public CreateUserRequest(String email) {
         this.email = email;
     }
-    public CreateUserRequest (boolean success,String message) {
+
+    public CreateUserRequest(boolean success, String message) {
         this.success = success;
         this.message = message;
     }
-    public CreateUserRequest (String email,String password) {
+
+    public CreateUserRequest(String email, String password) {
         this.email = email;
         this.password = password;
     }
-    public CreateUserRequest (String email,String password,String name) {
+
+    public CreateUserRequest(String email, String password, String name) {
         this.email = email;
         this.password = password;
         this.name = name;

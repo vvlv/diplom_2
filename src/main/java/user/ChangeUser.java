@@ -1,7 +1,14 @@
+package user;
+
+import models.UserModel;
+
 public class ChangeUser {
     private boolean success;
-    private User user;
-    public ChangeUser () {}
+    private UserModel user;
+
+    public ChangeUser() {
+    }
+
     public boolean isSuccess() {
         return success;
     }
@@ -10,16 +17,13 @@ public class ChangeUser {
         this.success = success;
     }
 
-    public User getUser() {
+    public UserModel getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserModel user) {
         this.user = user;
     }
-
-
-
 
 
 }

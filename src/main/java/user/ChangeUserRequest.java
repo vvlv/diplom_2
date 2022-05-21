@@ -3,6 +3,7 @@ package user;
 import com.github.javafaker.Faker;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
+import io.restassured.response.ValidatableResponse;
 import models.UserModel;
 
 import java.util.Locale;
@@ -58,35 +59,24 @@ public class ChangeUserRequest {
     }
 
     @Step("Обновление данных об почте")
-    public void changeNewUserEmailData() {
-        newUserData.setUser(new UserModel(newUserData.getUser().getName(), faker.internet().emailAddress()));
-        Response responseUserData = given()
+    public Response changeNewUserEmailAndNameData() {
+        newUserData.setUser(new UserModel(faker.name().firstName(), faker.internet().emailAddress()));
+        Response responseU;
+        return responseU = given()
                 .header("Content-type", "application/json")
                 .header("authorization", newUserData.getAccessToken())
-                .body(newUserData)
+                .body(newUserData.getUser())
                 .when()
                 .patch(changeUserInfoApi);
-        setResponse(responseUserData);
-    }
 
-    @Step("Обновление данных об имени")
-    public void changeNewUserNameData() {
-        newUserData.setUser(new UserModel(faker.name().firstName(), newUserData.getUser().getEmail()));
-        Response responseUserData = given()
-                .header("Content-type", "application/json")
-                .header("authorization", newUserData.getAccessToken())
-                .body(newUserData)
-                .when()
-                .patch(changeUserInfoApi);
-        setResponse(responseUserData);
     }
 
     @Step("Обновление данных об почте")
     public void changeNewUserEmailDataNoToken() {
         newUserData.setUser(new UserModel(newUserData.getUser().getName(), faker.internet().emailAddress()));
+
         Response responseUserData = given()
                 .header("Content-type", "application/json")
-
                 .body(newUserData)
                 .when()
                 .patch(changeUserInfoApi);

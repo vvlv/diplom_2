@@ -4,11 +4,13 @@ package user;/*Изменение данных пользователя:
         Для обеих ситуаций нужно проверить, что любое поле можно изменить. Для неавторизованного пользователя — ещё и то, что система вернёт ошибку.*/
 
 import io.restassured.internal.common.assertion.Assertion;
+import io.restassured.response.Response;
+import io.restassured.response.ValidatableResponse;
+import models.UserModel;
 import org.junit.Test;
 import user.ChangeUserRequest;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
 public class ChangeUserTest {
@@ -17,7 +19,7 @@ public class ChangeUserTest {
         ChangeUserRequest ahangeUserData = new ChangeUserRequest();
         ahangeUserData.generateUniqueUser();
         ahangeUserData.requestDataAboutNewUser();
-        ahangeUserData.changeNewUserEmailData();
+        ahangeUserData.changeNewUserEmailAndNameData();
         ahangeUserData.getResponse().then().statusCode(200);
     }
 
@@ -26,7 +28,7 @@ public class ChangeUserTest {
         ChangeUserRequest ahangeUserData = new ChangeUserRequest();
         ahangeUserData.generateUniqueUser();
         ahangeUserData.requestDataAboutNewUser();
-        ahangeUserData.changeNewUserNameData();
+        ahangeUserData.changeNewUserEmailAndNameData();
         ahangeUserData.getResponse().then().statusCode(200);
     }
 
@@ -49,24 +51,16 @@ public class ChangeUserTest {
     }
 
     @Test
-    public void changeUserEmail_checkResponseTest() {
+    public void changeUserEmailAndNameResponseTest() {
         ChangeUserRequest ahangeUserData = new ChangeUserRequest();
         ahangeUserData.generateUniqueUser();
         ahangeUserData.requestDataAboutNewUser();
-        ahangeUserData.changeNewUserEmailData();
-        String newUserEmail = ahangeUserData.getNewUserData().getUser().getEmail();
-        assertEquals(newUserEmail, ahangeUserData.getNewUserData().getUser().getEmail());
-    }
+        Response response = ahangeUserData.changeNewUserEmailAndNameData();
+        response
+                .then()
+                .body("user.name", equalTo(ahangeUserData.getNewUserData().getUser().getName()))
 
-    @Test
-    public void changeUserName_checkResponseTest() {
-        ChangeUserRequest ahangeUserData = new ChangeUserRequest();
-        ahangeUserData.generateUniqueUser();
-        ahangeUserData.requestDataAboutNewUser();
-        ahangeUserData.changeNewUserNameData();
-        String newUserName = ahangeUserData.getNewUserData().getUser().getName();
-        assertEquals(newUserName, ahangeUserData.getNewUserData().getUser().getName());
-
+                .body("user.email", equalTo(ahangeUserData.getNewUserData().getUser().getEmail()));
     }
 
 }
